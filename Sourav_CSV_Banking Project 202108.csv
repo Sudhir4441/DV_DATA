@@ -1,0 +1,110 @@
+Banking Credit Risk on Delinquent Base,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,Q1,Design data model by merging tables,,,
+,,,,,,Account_Perfrmance_Data Table,,
+,,,,,,Employer_details Table,,
+,,,,,,,,
+,,,,,Output,Account_number,,
+,,,,,,PORTFOLIO,,
+,,,,,,SSN,,
+,,,,,,Phone No. ,,
+,,,,,,Place Name,,
+,,,,,,County,,
+,,,,,,City,,
+,,,,,,State,,
+,,,,,,Zip,,
+,,,,,,Region,,
+,,,,,,Account Open Date,,
+,,,,,,Last_payment_date,,
+,,,,,,Loan_amount,,
+,,,,,,loan_status,,
+,,,,,,Origination_fico_score,,
+,,,,,,Current_fico_score,,
+,,,,,,Current_outstanding,,
+,,,,,,CUSTOMER_NUMBER,,
+,,,,,,COMPANY_NAME,,
+,,,,,,PRIMARY_INDUSTRY,,
+,,,,,,REVENUES (IN MILLIONS DOLLAR),,
+,,,,,,CATEGORY,,
+,,,,,,,,
+,,,,Q2,Get Month on Booking (MOB) from Account Open Date to Current Date,,,
+,,,,,,,,
+,,,,Q3,Get Delinquency days (Loan Defaulted by number of days),,,
+,,,,,,"if loan_status=""Non-Default"" then Delienquncy days=0",,
+,,,,,,"Else Delienquncy days=datedif(last_payment_date,today(),""d"")",,
+,,,,,,,,
+,,,,Q4,Create Delinquency Bucket Days,Delinqency Days=0,Current,
+,,,,,,>0 and <=30,X Days,
+,,,,,,>30 and <=60,X+1 Days,
+,,,,,,>60 and <=90,X+2 Days,
+,,,,,,>90 and <=120,X+3 Days,
+,,,,,,>120 and <=150,X+4 Days,
+,,,,,,>150 and <=180,X+5 Days,
+,,,,,,>180,Charge Off,
+,,,,Q5,Create Origination vs Currect Fico score variance in %,,,
+,,,,,If Its negative value use conditional formatting to highlight that,,,
+,,,,,,,,
+,,,,Q6,Current Outstanding Balance in %,Current_outstanding/Loan_amount,,
+,,,,,,,,
+,,,,Q7,Develop Risk Segment,Delinquency Days <=60,High-Risk-1,
+,,,,,,Score Variance in Negative %,,
+,,,,,,Outstanding Balance % >= 50%,,
+,,,,,,Delinquency Days > 60,High-Risk-2,
+,,,,,,Score Variance in Negative %,,
+,,,,,,Outstanding Balance % >= 50%,,
+,,,,,,Delinquency Days <= 60,High-Risk-3,
+,,,,,,Score Variance in Negative %,,
+,,,,,,Outstanding Balance % >30% and < 50%,,
+,,,,,,Delinquency Days> 60,High-Risk-4,
+,,,,,,Score Variance in Negative %,,
+,,,,,,Outstanding Balance % >30% and < 50%,,
+,,,,,,Delinquency Days <= 60,Mid_Risk-1,
+,,,,,,Score Variance in Negative %,,
+,,,,,,Outstanding Balance % >10% and < =30%,,
+,,,,,,Delinquency Days > 60,Mid_Risk-2,
+,,,,,,Score Variance in Negative %,,
+,,,,,,Outstanding Balance % >10% and < =30%,,
+,,,,,,Else ,Low_risk,
+,,,,,,,,
+,,,,Q8,Create Summary Report for all different portfolios,Good Loan Per Account,Outstanding Balance of non-default account/# of non default account,
+,,,,,,Bad Loan Per Account,Outstanding Balance of default account/# of default account,
+,,,,,,,,
+,,,,Q9,Create Summary Report for all different portfolios,,# of Account,Total Outstanding Balance
+,,,,,,X Days,#,Balance ($)
+,,,,,,X+1 Days,#,Balance ($)
+,,,,,,X+2 Days,#,Balance ($)
+,,,,,,X+3 Days,#,Balance ($)
+,,,,,,X+4 Days,#,Balance ($)
+,,,,,,X+5 Days,#,Balance ($)
+,,,,,,Charge Off,#,Balance ($)
+,,,,,,,,
+,,,,,,,,
+,,,,Q10,Create Summary Report for all different portfolios,,# of Account %,Total Outstanding Balance %
+,,,,,,X Days,# of X Days Account/ Total # of Accounts,# of X Days Balance/ Total # of Balances
+,,,,,,X+1 Days,# of X+1 Days Account/ Total # of Accounts,# of X+1 Days Balance/ Total # of Balances
+,,,,,,X+2 Days,# of X+2 Days Account/ Total # of Accounts,# of X+2 Days Balance/ Total # of Balances
+,,,,,,X+3 Days,# of X+3 Days Account/ Total # of Accounts,# of X+3 Days Balance/ Total # of Balances
+,,,,,,X+4 Days,# of X+4 Days Account/ Total # of Accounts,# of X+4 Days Balance/ Total # of Balances
+,,,,,,X+5 Days,# of X+5 Days Account/ Total # of Accounts,# of X+5 Days Balance/ Total # of Balances
+,,,,,,Charge Off,# of Charge Off Accounts / Total # of Accounts,# of Charge Off Balances / Total # of Balances
+,,,,,,,,
+,,,,,,,,
+,,,,Q11,Portfolio Level each risk segment wise # of accounts vs Total Balance $,,# of Account,Total Outstanding Balance
+,,,,,,High Risk-1,#,Balance ($)
+,,,,,,High Risk-2,#,Balance ($)
+,,,,,,High Risk-3,#,Balance ($)
+,,,,,,High Risk-4,#,Balance ($)
+,,,,,,Mid-Risk-1,#,Balance ($)
+,,,,,,Mid-Risk-2,#,Balance ($)
+,,,,,,Low Risk,#,Balance ($)
+,,,,,,,,
+,,,,,,,,
+,,,,Q12,Portfolio Level each risk segment wise # of accounts vs Total Balance $,,# of Account %,Total Outstanding Balance %
+,,,,,,High Risk-1,# of High Risk-1 Days Account/ Total # of Accounts,# of High Risk-1 Days Balance/ Total # of Balances
+,,,,,,High Risk-2,# of High Risk-2 Days Account/ Total # of Accounts,# of High Risk-2 Days Balance/ Total # of Balances
+,,,,,,High Risk-3,# of High Risk-3 Days Account/ Total # of Accounts,# of High Risk-3 Days Balance/ Total # of Balances
+,,,,,,High Risk-4,# of High Risk-4 Days Account/ Total # of Accounts,# of High Risk-4 Days Balance/ Total # of Balances
+,,,,,,Mid-Risk-1,# of Mid Risk-1 Days Account/ Total # of Accounts,# of Mid Risk-1 Days Balance/ Total # of Balances
+,,,,,,Mid-Risk-2,# of Mid Risk-2 Days Account/ Total # of Accounts,# of Mid Risk-2 Days Balance/ Total # of Balances
+,,,,,,Low Risk,# of Low Risk Accounts / Total # of Accounts,# of Low Risk Balances / Total # of Balances
